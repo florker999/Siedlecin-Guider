@@ -1,6 +1,5 @@
 import React from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import { Audio } from "expo-av";
+import { ScrollView, StyleSheet, View } from "react-native";
 import AudioPlayer from "@/components/AudioPlayer";
 
 interface IProps {
@@ -22,6 +21,8 @@ export default function RecordingPage(props: IProps) {
 const styles = StyleSheet.create({
     audioContainer: {
         display: 'flex',
-        rowGap: 15
+        rowGap: 15,
+        width: "90%",
+        marginHorizontal: 'auto'
     }
 });
