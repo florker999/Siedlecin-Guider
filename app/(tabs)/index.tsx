@@ -4,6 +4,8 @@ import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { ButtonWithImage } from '@/components/ButtonWithImage';
+import { ButtonLink } from '@/components/ButtonLink';
 
 export default function HomeScreen() {
   return (
@@ -11,12 +13,27 @@ export default function HomeScreen() {
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
       headerImage={
         <Image
-          source={require('@/assets/images/partial-react-logo.png')}
+          source={require('@/assets/images/wieza.jpg')}
           style={styles.reactLogo}
         />
       }>
+        <ButtonLink target="/parter" title='III Floor' backgroundColor='#400080' titleColor='white'/>
+        <ButtonLink target="/parter" title='II Floor' backgroundColor='#800080' titleColor='white'/>
+        <ButtonLink target="/parter" title='I Floor' backgroundColor='#800040' titleColor='white'/>
+    </ParallaxScrollView>
+  );
+  return (
+    <ParallaxScrollView
+      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
+      headerImage={
+        <Image
+          source={require('@/assets/images/wieza.jpg')}
+          style={styles.reactLogo}
+        />
+      }>
+      <ButtonWithImage target="/parter" title=''/>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
+        <ThemedText type="title">Hello!</ThemedText>
         <HelloWave />
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
@@ -51,6 +68,10 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
+  floorContainer: {
+    borderColor: 'black',
+    borderWidth: 2
+  },
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -61,8 +82,8 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   reactLogo: {
-    height: 178,
-    width: 290,
+    height: "100%",
+    width: "100%",
     bottom: 0,
     left: 0,
     position: 'absolute',
