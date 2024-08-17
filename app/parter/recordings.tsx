@@ -7,12 +7,11 @@ interface IProps {
 }
 
 export default function RecordingPage(props: IProps) {
-
     return (
         <ScrollView>
             <View style={styles.audioContainer}>
-                <AudioPlayer title="Painting" />
-                <AudioPlayer title="Nails" />
+                <AudioPlayer title="Painting" audio={require('@/assets/recordings/parter1.mp3')} />
+                <AudioPlayer title="Nails" audio={require('@/assets/recordings/parter1.mp3')} />
             </View>
         </ScrollView>
     )

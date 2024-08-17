@@ -1,32 +1,32 @@
 import { Pressable, View, Text, StyleSheet } from "react-native";
-import { Audio } from "expo-av";
 import React from "react";
+import { Audio } from "expo-av";
 
 interface IProps {
     title: string;
-    //audioSrc: string;
+    audio: any;
 }
 
 export default function AudioPlayer(props: IProps) {
-    const [audio, setAudio] = React.useState<Audio.Sound>();
+    const [sound, setSound] = React.useState<Audio.Sound>();
 
     React.useEffect(() => {
-        Audio.Sound
-            .createAsync(require("@/assets/recordings/parter1.mp3"))
-            .then(res => setAudio(res.sound));
-    }, [])
+        Audio.Sound.createAsync(props.audio)
+            .then(res => setSound(res.sound));
+    }, []);
+
     return (
         <View style={styles.audioButton}>
             <Text style={styles.audioTitle}>
                 {props.title}
             </Text>
             <View style={styles.buttonsContainer}>
-                <Pressable style={styles.buttonStart} onPress={() => audio?.playAsync()}>
+                <Pressable style={styles.buttonStart} onPress={() => sound?.playAsync()}>
                     <Text style={styles.buttonTitle}>
                         Start
                     </Text>
                 </Pressable>
-                <Pressable style={styles.buttonPause} onPress={() => audio?.pauseAsync()}>
+                <Pressable style={styles.buttonPause} onPress={() => sound?.pauseAsync()}>
                     <Text style={styles.buttonTitle}>
                         Pause
                     </Text>
