@@ -6,6 +6,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { ButtonWithImage } from '@/components/ButtonWithImage';
 import { ButtonLink } from '@/components/ButtonLink';
+import Tower from '@/components/tower/Tower';
 
 export default function HomeScreen() {
   return (
@@ -17,9 +18,7 @@ export default function HomeScreen() {
           style={styles.reactLogo}
         />
       }>
-        <ButtonLink target="/parter" title='III Floor' backgroundColor='#400080' titleColor='white'/>
-        <ButtonLink target="/parter" title='II Floor' backgroundColor='#800080' titleColor='white'/>
-        <ButtonLink target="/parter" title='I Floor' backgroundColor='#800040' titleColor='white'/>
+        <Tower />
     </ParallaxScrollView>
   );
   return (
