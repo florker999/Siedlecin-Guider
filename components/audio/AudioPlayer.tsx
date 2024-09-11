@@ -3,17 +3,50 @@ import React from "react";
 import { Audio } from "expo-av";
 
 interface IProps {
-    title: string;
-    audio: any;
+    title: string,
+    audio: any,
+    play: boolean,
+    onPlay?(): any,
+    onFinish?(): any
 }
 
 export default function AudioPlayer(props: IProps) {
     const [sound, setSound] = React.useState<Audio.Sound>();
 
     React.useEffect(() => {
-        Audio.Sound.createAsync(props.audio)
-            .then(res => setSound(res.sound));
+        Audio.Sound
+            .createAsync(props.audio)
+            .then(res => {
+                res.sound.setOnPlaybackStatusUpdate(status => {
+                    if (status.isLoaded) {
+                        if (status.didJustFinish && props.onFinish) {
+                            props.onFinish();
+                        }
+                    }
+                })
+                setSound(res.sound)
+            });
     }, []);
+
+    React.useEffect(() => {
+        if (props.play) {
+            console.log("Player: I'm playing.");
+            sound?.playAsync();
+        } else {
+            sound?.pauseAsync();
+            console.log("Player: Changed my play prop.");
+        }
+    }, [props.play]);
+
+    const onPressStart = () => {
+        const { 
+            onPlay = () => undefined,
+            onFinish = () => undefined
+         } = props;
+
+        onPlay();
+        sound?.playAsync();
+    };
 
     return (
         <View style={styles.audioButton}>
@@ -21,7 +54,7 @@ export default function AudioPlayer(props: IProps) {
                 {props.title}
             </Text>
             <View style={styles.buttonsContainer}>
-                <Pressable style={styles.buttonStart} onPress={() => sound?.playAsync()}>
+                <Pressable style={styles.buttonStart} onPress={onPressStart}>
                     <Text style={styles.buttonTitle}>
                         Start
                     </Text>
