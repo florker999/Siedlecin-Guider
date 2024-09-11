@@ -9,16 +9,14 @@ interface IProps {
 export default function TourTab(props: IProps) {
     const [trackIndex, setTrackIndex] = React.useState<number>();
 
-    const onPlay = (index: number) => {
-        console.log("Started to play: " + index)
+    const onPlay = React.useCallback((index: number) => {
         setTrackIndex(index);
-    };
+    }, [trackIndex]);
 
-    const onFinish = (index: number) => {
-        console.log("Finished playing: " + index); 
+    const onFinish = React.useCallback((index: number) => {
         setTrackIndex(index+1)
         // more than tracks?
-    };
+    }, [trackIndex]);
 
     const guideTracks: JSX.Element[] = [];
     for (let index = 0; index < 15; index++) {

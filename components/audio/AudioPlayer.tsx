@@ -20,13 +20,21 @@ export default function AudioPlayer(props: IProps) {
         Audio.Sound
             .createAsync(props.audio)
             .then(res => {
+                if (res.status.isLoaded) {
+                    setDuration(res.status.durationMillis ? milisToString(res.status.durationMillis) : '--:--');
+                }
                 res.sound.setOnPlaybackStatusUpdate(status => {
                     if (status.isLoaded) {
-                        setDuration(status.durationMillis ? milisToString(status.durationMillis) : '--:--');
-                        setPosition(milisToString(status.positionMillis));
+                        if (status.isPlaying) {
+                            setPosition(milisToString(status.positionMillis));
+                        }
 
-                        if (status.didJustFinish && props.onFinish) {
-                            props.onFinish();
+                        if (status.didJustFinish) {
+                            setPosition(milisToString(0));
+
+                            if (props.onFinish) {
+                                props.onFinish();
+                            }
                         }
                     }
                 })
@@ -36,11 +44,9 @@ export default function AudioPlayer(props: IProps) {
 
     React.useEffect(() => {
         if (props.play) {
-            console.log("Player: I'm playing.");
             sound?.playAsync();
         } else {
             sound?.pauseAsync();
-            console.log("Player: Changed my play prop.");
         }
     }, [props.play]);
 
@@ -55,7 +61,7 @@ export default function AudioPlayer(props: IProps) {
         const { onPause = () => undefined } = props;
 
         onPause();
-        sound?.stopAsync();
+        sound?.pauseAsync();
     }, [sound]);
 
     return (
@@ -124,7 +130,7 @@ const styles = StyleSheet.create({
     }
 });
 
-function milisToString(milis:number): string {
+function milisToString(milis: number): string {
     const secs = Math.floor(milis / 1000);
     const mins = Math.floor(secs / 60);
 
