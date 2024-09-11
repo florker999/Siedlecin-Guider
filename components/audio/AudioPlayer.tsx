@@ -13,6 +13,8 @@ interface IProps {
 
 export default function AudioPlayer(props: IProps) {
     const [sound, setSound] = React.useState<Audio.Sound>();
+    const [position, setPosition] = React.useState('00:00');
+    const [duration, setDuration] = React.useState('--:--');
 
     React.useEffect(() => {
         Audio.Sound
@@ -20,6 +22,9 @@ export default function AudioPlayer(props: IProps) {
             .then(res => {
                 res.sound.setOnPlaybackStatusUpdate(status => {
                     if (status.isLoaded) {
+                        setDuration(status.durationMillis ? milisToString(status.durationMillis) : '--:--');
+                        setPosition(milisToString(status.positionMillis));
+
                         if (status.didJustFinish && props.onFinish) {
                             props.onFinish();
                         }
@@ -39,19 +44,19 @@ export default function AudioPlayer(props: IProps) {
         }
     }, [props.play]);
 
-    const onPressStart = () => {
+    const onPressStart = React.useCallback(() => {
         const { onPlay = () => undefined } = props;
 
         onPlay();
         sound?.playAsync();
-    };
+    }, [sound]);
 
-    const onPressPause = () => {
+    const onPressPause = React.useCallback(() => {
         const { onPause = () => undefined } = props;
 
         onPause();
         sound?.stopAsync();
-    }
+    }, [sound]);
 
     return (
         <View style={styles.audioButton}>
@@ -64,6 +69,9 @@ export default function AudioPlayer(props: IProps) {
                         Start
                     </Text>
                 </Pressable>
+                <View style={styles.positionLabel}>
+                    <Text>{position}/{duration}</Text>
+                </View>
                 <Pressable style={[styles.buttonPause, props.play && { backgroundColor: "blue" }]} onPress={onPressPause}>
                     <Text style={styles.buttonTitle}>
                         Pause
@@ -110,5 +118,15 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     buttonTitle: {
+    },
+    positionLabel: {
+
     }
 });
+
+function milisToString(milis:number): string {
+    const secs = Math.floor(milis / 1000);
+    const mins = Math.floor(secs / 60);
+
+    return `${mins < 10 && 0}${mins}:${secs < 10 && 0}${secs % 60}`;
+}
