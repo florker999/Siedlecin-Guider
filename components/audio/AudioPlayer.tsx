@@ -7,6 +7,7 @@ interface IProps {
     audio: any,
     play: boolean,
     onPlay?(): any,
+    onPause?(): any,
     onFinish?(): any
 }
 
@@ -39,14 +40,18 @@ export default function AudioPlayer(props: IProps) {
     }, [props.play]);
 
     const onPressStart = () => {
-        const { 
-            onPlay = () => undefined,
-            onFinish = () => undefined
-         } = props;
+        const { onPlay = () => undefined } = props;
 
         onPlay();
         sound?.playAsync();
     };
+
+    const onPressPause = () => {
+        const { onPause = () => undefined } = props;
+
+        onPause();
+        sound?.stopAsync();
+    }
 
     return (
         <View style={styles.audioButton}>
@@ -54,12 +59,12 @@ export default function AudioPlayer(props: IProps) {
                 {props.title}
             </Text>
             <View style={styles.buttonsContainer}>
-                <Pressable style={styles.buttonStart} onPress={onPressStart}>
+                <Pressable style={[styles.buttonStart, !props.play && { backgroundColor: "blue" }]} onPress={onPressStart}>
                     <Text style={styles.buttonTitle}>
                         Start
                     </Text>
                 </Pressable>
-                <Pressable style={styles.buttonPause} onPress={() => sound?.pauseAsync()}>
+                <Pressable style={[styles.buttonPause, props.play && { backgroundColor: "blue" }]} onPress={onPressPause}>
                     <Text style={styles.buttonTitle}>
                         Pause
                     </Text>

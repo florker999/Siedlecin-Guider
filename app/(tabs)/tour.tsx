@@ -28,6 +28,7 @@ export default function TourTab(props: IProps) {
                 title={"Track " + index}
                 audio={require("@/assets/recordings/parter1.mp3")}
                 onPlay={() => onPlay(index)}
+                onPause={() => setTrackIndex(undefined)}
                 onFinish={() => onFinish(index)}
                 play={trackIndex === index}
             />
