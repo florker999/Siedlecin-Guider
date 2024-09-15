@@ -50,37 +50,19 @@ export default function AudioPlayer(props: IProps) {
         }
     }, [props.play]);
 
-    const onPressStart = React.useCallback(() => {
-        const { onPlay = () => undefined } = props;
-
-        onPlay();
-        sound?.playAsync();
-    }, [sound]);
-
-    const onPressPause = React.useCallback(() => {
-        const { onPause = () => undefined } = props;
-
-        onPause();
-        sound?.pauseAsync();
-    }, [sound]);
-
+    const { title, play, onPlay, onPause } = props;
     return (
         <View style={styles.audioButton}>
             <Text style={styles.audioTitle}>
-                {props.title}
+                {title}
             </Text>
             <View style={styles.buttonsContainer}>
-                <Pressable style={[styles.buttonStart, !props.play && { backgroundColor: "blue" }]} onPress={onPressStart}>
-                    <Text style={styles.buttonTitle}>
-                        Start
-                    </Text>
-                </Pressable>
                 <View style={styles.positionLabel}>
                     <Text>{position}/{duration}</Text>
                 </View>
-                <Pressable style={[styles.buttonPause, props.play && { backgroundColor: "blue" }]} onPress={onPressPause}>
+                <Pressable style={styles.buttonPause} onPress={props.play ? onPause : onPlay}>
                     <Text style={styles.buttonTitle}>
-                        Pause
+                        {play ? 'Pause' : 'Play'}
                     </Text>
                 </Pressable>
             </View>
