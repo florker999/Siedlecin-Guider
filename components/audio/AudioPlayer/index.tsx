@@ -18,7 +18,7 @@ export default function AudioPlayer(props: IProps) {
     const [position, setPosition] = React.useState(0);
     const [duration, setDuration] = React.useState<number>();
 
-    const progressBarWidth1 = React.useRef(new Animated.Value(0)).current;
+    const progressBarWidth1 = React.useRef(new Animated.Value(-1)).current;
     const progressBarWidth2 = React.useRef(new Animated.Value(1)).current;
 
     const animation = React.useRef<Animated.CompositeAnimation>();
@@ -53,7 +53,7 @@ export default function AudioPlayer(props: IProps) {
                         if (durationMillis) {
                             animation.current = Animated.parallel([
                                 Animated.timing(progressBarWidth1, {
-                                    toValue: 1,
+                                    toValue: 0,
                                     duration: durationMillis - positionMillis,
                                     useNativeDriver: true,
                                     easing: Easing.linear
@@ -97,8 +97,7 @@ export default function AudioPlayer(props: IProps) {
             <View style={styles.progressPart}>
                 <Text style={styles.positionLabel}>{milisToString(position)}/{duration ? milisToString(duration) : '--:--'}</Text>
                 <View style={styles.progressBarContainer}>
-                    <Animated.View style={[styles.progressBarColor, styles.progressBarHeight, { flexGrow: progressBarWidth1 }]} />
-                    <Animated.View style={[styles.progressBarHeight, { flexGrow: progressBarWidth2 }]} />
+                    <Animated.View style={[styles.progressBarColor, styles.progressBarHeight, { width: '100%', left: progressBarWidth1.interpolate({ inputRange: [-1, 0], outputRange: ['-100%', '0%'] }) }]} />
                 </View>
             </View>
         </View>

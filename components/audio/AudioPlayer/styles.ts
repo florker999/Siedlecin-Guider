@@ -53,9 +53,11 @@ export default StyleSheet.create({
         width: '100%'
     },
     progressBarContainer: {
-        display: 'flex',
-        flexDirection: 'row',
-        width: '100%'
+        width: '100%',
+        position: 'relative'
+    },
+    progressBar: {
+        position: 'absolute'
     },
     progressBarHeight: {
         height: 4
