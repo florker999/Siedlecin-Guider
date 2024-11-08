@@ -1,112 +1,97 @@
-import { View, Text, Animated, Easing, StyleProp, ViewStyle } from "react-native";
+import { View, Text, Easing } from "react-native";
+import * as Progress from "react-native-progress";
 import React from "react";
-import { Audio } from "expo-av";
 import IconButton from "../../basic/iconButton";
 import styles from "./styles";
-
-interface IProps {
-    title: string,
-    audio: Audio.Sound,
-    play: boolean,
-    onPlay(): any,
-    onPause(): any,
-    onFinish(): any,
-    style?: StyleProp<ViewStyle>[]
-}
+import IProps from "./IProps";
+import { Assets, Button, ButtonSize, Icon } from "react-native-ui-lib";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 export default function AudioPlayer(props: IProps) {
-    const [position, setPosition] = React.useState(0);
-    const [duration, setDuration] = React.useState<number>();
+  const [position, setPosition] = React.useState(0);
+  const [duration, setDuration] = React.useState<number>();
 
-    const progressBarWidth1 = React.useRef(new Animated.Value(-1)).current;
-    const progressBarWidth2 = React.useRef(new Animated.Value(1)).current;
+  const { audio, play, onPlay, onPause, onFinish, title } = props;
 
-    const animation = React.useRef<Animated.CompositeAnimation>();
+  // modify audio update actions on first render
+  React.useEffect(() => {
+    audio.setOnPlaybackStatusUpdate((status) => {
+      if (status.isLoaded) {
+        if (status.isPlaying) {
+          // update position while playing
+          setPosition(status.positionMillis);
+        } else if (status.didJustFinish) {
+          // reset track, update position to final and do finish callback
+          // once finished reset track
+          audio.stopAsync();
+          setPosition(status.positionMillis);
 
-    React.useEffect(() => {
-        props.audio.setOnPlaybackStatusUpdate(status => {
-            if (status.isLoaded) {
-                if (status.isPlaying) {
-                    setPosition(status.positionMillis);
-                } else if (status.didJustFinish) {
-                    setPosition(0);
-
-                    if (props.onFinish) {
-                        props.onFinish();
-                    }
-                }
-            }
-        });
-    }, []);
-
-    React.useEffect(() => {
-        if (props.play) {
-            props.audio.playAsync()
-                .then(status => {
-                    if (status.isLoaded) {
-                        const { durationMillis, positionMillis } = status;
-
-                        if (!duration) {
-                            setDuration(durationMillis);
-                        }
-
-                        if (durationMillis) {
-                            animation.current = Animated.parallel([
-                                Animated.timing(progressBarWidth1, {
-                                    toValue: 0,
-                                    duration: durationMillis - positionMillis,
-                                    useNativeDriver: true,
-                                    easing: Easing.linear
-                                }),
-                                Animated.timing(progressBarWidth2, {
-                                    toValue: 0,
-                                    duration: durationMillis - positionMillis,
-                                    useNativeDriver: true,
-                                    easing: Easing.linear
-                                })
-                            ]);
-                            animation.current.start();
-                        }
-                    }
-                })
-        } else {
-            props.audio.pauseAsync()
-                .then(() => {
-                    animation.current?.stop();
-                })
+          if (onFinish) {
+            onFinish();
+          }
         }
-    }, [props.play]);
+      }
+    });
+  }, []);
 
-    const { title, play, onPlay, onPause } = props;
-    const icons = {
-        play: require("@/assets/icons/play.png"),
-        pause: require("@/assets/icons/pause.png")
-    }
+  // do when track should start or stop playing
+  React.useEffect(() => {
+    audio.getStatusAsync().then((status) => {
+      if (status.isLoaded) {
+        if (!status.isPlaying && play) {
+          // start track if it should but isn't playing and update duration if undefined
+          setPosition(0);
+          audio.playAsync().then((res) => {
+            onPlay();
+            if (res.isLoaded) {
+              setDuration(res.durationMillis);
+            }
+          });
+        } else if (status.isPlaying && !play) {
+          // pause track if is playing but shouldn't and do pause callback
+          audio.pauseAsync().then(() => onPause());
+        }
+      }
+    });
+  }, [audio, play]);
 
-    return (
-        <View style={[styles.audioPlayer, props.style]}>
-            <View style={styles.mainPart}>
-                <Text style={styles.audioTitle}>
-                    {title}
-                </Text>
-                <IconButton
-                    icon={icons[play ? 'pause' : 'play']}
-                    onPress={play ? onPause : onPlay}
-                />
-            </View>
-            <View style={styles.progressPart}>
-                <Text style={styles.positionLabel}>{milisToString(position)}/{duration ? milisToString(duration) : '--:--'}</Text>
-                <View style={styles.progressBarContainer}>
-                    <Animated.View style={[styles.progressBarColor, styles.progressBarHeight, { width: '100%', left: progressBarWidth1.interpolate({ inputRange: [-1, 0], outputRange: ['-100%', '0%'] }) }]} />
-                </View>
-            </View>
+  const icons = {
+    play: require("@/assets/icons/play.png"),
+    pause: require("@/assets/icons/pause.png"),
+  };
+
+  return (
+    <View style={[styles.audioPlayer, props.style]}>
+      <View style={styles.mainPart}>
+        <Text style={styles.audioTitle}>{title}</Text>
+        <MaterialIcons.Button
+          name={play ? "pause" : "play-arrow"}
+          size={22}
+          onPress={play ? onPause : onPlay}
+        />
+      </View>
+      <View style={styles.progressPart}>
+        <Text style={styles.positionLabel}>
+          {milisToString(position)}/
+          {duration ? milisToString(duration) : "--:--"}
+        </Text>
+        <View style={styles.progressBarContainer}>
+          <Progress.Bar
+            width={null}
+            progress={duration ? position / duration : undefined}
+            animationType="timing"
+            animationConfig={{ easing: Easing.linear }}
+            useNativeDriver
+          />
         </View>
-    );
+      </View>
+    </View>
+  );
 }
 
 function milisToString(milis: number): string {
-    const secs = Math.floor(milis / 1000);
-    const mins = Math.floor(secs / 60);
+  const secs = Math.floor(milis / 1000);
+  const mins = Math.floor(secs / 60);
 
-    return `${mins < 10 && 0}${mins}:${secs < 10 && 0}${secs % 60}`;
+  return `${mins < 10 && 0}${mins}:${secs < 10 && 0}${secs % 60}`;
 }

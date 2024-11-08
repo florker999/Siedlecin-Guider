@@ -2,71 +2,84 @@ import AudioPlayer from "@/components/audio/AudioPlayer";
 import { Audio } from "expo-av";
 import { Sound } from "expo-av/build/Audio";
 import React from "react";
-import { ActivityIndicator, ScrollView } from "react-native";
+import {
+  ActivityIndicator,
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+} from "react-native";
 
 type Timeout = ReturnType<typeof setTimeout>;
 
-interface IProps {
-
-}
+interface IProps {}
 
 export default function TourTab(props: IProps) {
-    const [trackIndex, setTrackIndex] = React.useState<number>();
-    const [tracks, setTracks] = React.useState<Sound[]>();
-    const [timer, setTimer] = React.useState<Timeout>();
+  const [showWelcomingWindow, setShowWelcomingWindow] = React.useState(true);
+  const [trackIndex, setTrackIndex] = React.useState<number>();
+  const [tracks, setTracks] = React.useState<Sound[]>();
+  const [timer, setTimer] = React.useState<Timeout>();
 
-    const onPlay = React.useCallback((index: number) => {
-        if (timer) {
-            clearTimeout(timer);
-            setTimer(undefined);
-        }
+  const onPlay = React.useCallback(
+    (index: number) => {
+      if (timer) {
+        clearTimeout(timer);
+        setTimer(undefined);
+      }
 
-        setTrackIndex(index);
-    }, [trackIndex]);
+      setTrackIndex(index);
+    },
+    [trackIndex],
+  );
 
-    const onFinish = React.useCallback((index: number) => {
-        setTrackIndex(undefined);
-        if (timer) {
-            clearTimeout(timer);
-        }
+  const onFinish = React.useCallback(
+    (index: number) => {
+      setTrackIndex(undefined);
+      if (timer) {
+        clearTimeout(timer);
+      }
 
-        // TODO describe and finilize achiving the end of tour
-        const newTimer = setTimeout(() => setTrackIndex(index + 1), 1000);
-        setTimer(newTimer);
-        // more than tracks?
-    }, [timer]);
+      // TODO describe and finilize achiving the end of tour
+      const newTimer = setTimeout(() => setTrackIndex(index + 1), 1000);
+      setTimer(newTimer);
+      // more than tracks?
+    },
+    [timer],
+  );
 
-    React.useEffect(() => {
-        const promises: Promise<Sound>[] = [];
+  React.useEffect(() => {
+    const promises: Promise<Sound>[] = [];
 
-        for (let index = 0; index < 15; index++) {
-            const newPromise = Audio.Sound
-                .createAsync(require("@/assets/recordings/parter1.mp3"))
-                .then(res => res.sound);
-            promises.push(newPromise);
-        }
+    for (let index = 0; index < 15; index++) {
+      const newPromise = Audio.Sound.createAsync(
+        require("@/assets/recordings/parter1.mp3"),
+        { progressUpdateIntervalMillis: 1 },
+      ).then((res) => res.sound);
+      promises.push(newPromise);
+    }
 
-        Promise.all(promises)
-            .then(res => setTracks(res));
-    }, []);
+    Promise.all(promises).then((res) => setTracks(res));
+  }, []);
 
-    return (
-        <ScrollView>
-            {tracks?.map((track, index) => (
-                <AudioPlayer
-                    key={index}
-                    title={"Track " + index}
-                    audio={track}
-                    onPlay={() => onPlay(index)}
-                    onPause={() => setTrackIndex(undefined)}
-                    onFinish={() => onFinish(index)}
-                    play={trackIndex === index}
-                    style={[!index && { borderTopWidth: 0 }, index === tracks.length - 1 && { borderBottomWidth: 0 }]}
-                />
-            ))
-                ||
-                <ActivityIndicator />
-            }
-        </ScrollView>
-    )
+  return (
+    <SafeAreaView>
+      <ScrollView>
+        <StatusBar hidden={false} />
+        {tracks?.map((track, index) => (
+          <AudioPlayer
+            key={index}
+            title={"Track " + index}
+            audio={track}
+            onPlay={() => onPlay(index)}
+            onPause={() => setTrackIndex(undefined)}
+            onFinish={() => onFinish(index)}
+            play={trackIndex === index}
+            style={[
+              !index && { borderTopWidth: 0 },
+              index === tracks.length - 1 && { borderBottomWidth: 0 },
+            ]}
+          />
+        )) || <ActivityIndicator />}
+      </ScrollView>
+    </SafeAreaView>
+  );
 }
