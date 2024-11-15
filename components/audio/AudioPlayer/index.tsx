@@ -1,10 +1,10 @@
-import { View, Text, Easing } from "react-native";
+import { View, Easing } from "react-native";
 import * as Progress from "react-native-progress";
 import React from "react";
 import IconButton from "../../basic/iconButton";
 import styles from "./styles";
 import IProps from "./IProps";
-import { Assets, Button, ButtonSize, Icon } from "react-native-ui-lib";
+import { Assets, Button, ButtonSize, Icon, Text } from "react-native-ui-lib";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 export default function AudioPlayer(props: IProps) {

@@ -1,4 +1,5 @@
 import AudioPlayer from "@/components/audio/AudioPlayer";
+import InstructionCard from "@/components/basic/InstructionCard";
 import { Audio } from "expo-av";
 import { Sound } from "expo-av/build/Audio";
 import React from "react";
@@ -7,6 +8,9 @@ import {
   SafeAreaView,
   ScrollView,
   StatusBar,
+  Modal,
+  StyleSheet,
+  View,
 } from "react-native";
 
 type Timeout = ReturnType<typeof setTimeout>;
@@ -62,6 +66,13 @@ export default function TourTab(props: IProps) {
 
   return (
     <SafeAreaView>
+      <Modal transparent visible={showWelcomingWindow} animationType="slide">
+        <View style={styles.CenteredView}>
+          <InstructionCard
+            onButtonClick={() => setShowWelcomingWindow(false)}
+          />
+        </View>
+      </Modal>
       <ScrollView>
         <StatusBar hidden={false} />
         {tracks?.map((track, index) => (
@@ -83,3 +94,12 @@ export default function TourTab(props: IProps) {
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  CenteredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#000000D8",
+  },
+});
