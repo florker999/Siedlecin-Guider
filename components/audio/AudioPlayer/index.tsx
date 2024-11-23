@@ -1,15 +1,16 @@
-import { View, Easing } from "react-native";
-import * as Progress from "react-native-progress";
+import { View, Easing, Animated } from "react-native";
 import React from "react";
-import IconButton from "../../basic/iconButton";
 import styles from "./styles";
 import IProps from "./IProps";
-import { Assets, Button, ButtonSize, Icon, Text } from "react-native-ui-lib";
+import { Card, Text } from "react-native-ui-lib";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import ProgressBar from "@/components/basic/progressBar";
 
 export default function AudioPlayer(props: IProps) {
   const [position, setPosition] = React.useState(0);
   const [duration, setDuration] = React.useState<number>();
+  const progressAnim = React.useRef(new Animated.Value(0)).current;
+  const progressAnim2 = React.useRef(new Animated.Value(-50)).current;
 
   const { audio, play, onPlay, onPause, onFinish, title } = props;
 
@@ -43,6 +44,18 @@ export default function AudioPlayer(props: IProps) {
           setPosition(0);
           audio.playAsync().then((res) => {
             onPlay();
+            Animated.timing(progressAnim, {
+              toValue: 1,
+              easing: Easing.linear,
+              useNativeDriver: true,
+              duration: (res.isLoaded && res.durationMillis) || undefined,
+            }).start();
+            Animated.timing(progressAnim2, {
+              toValue: 0,
+              easing: Easing.linear,
+              useNativeDriver: true,
+              duration: (res.isLoaded && res.durationMillis) || undefined,
+            }).start();
             if (res.isLoaded) {
               setDuration(res.durationMillis);
             }
@@ -50,6 +63,8 @@ export default function AudioPlayer(props: IProps) {
         } else if (status.isPlaying && !play) {
           // pause track if is playing but shouldn't and do pause callback
           audio.pauseAsync().then(() => onPause());
+          progressAnim.stopAnimation();
+          progressAnim2.stopAnimation();
         }
       }
     });
@@ -60,32 +75,29 @@ export default function AudioPlayer(props: IProps) {
     pause: require("@/assets/icons/pause.png"),
   };
 
+  const positionToDuration: number = duration ? position / duration : 0;
+
   return (
-    <View style={[styles.audioPlayer, props.style]}>
+    <Card style={styles.audioPlayer}>
       <View style={styles.mainPart}>
         <Text style={styles.audioTitle}>{title}</Text>
-        <MaterialIcons.Button
-          name={play ? "pause" : "play-arrow"}
-          size={22}
-          onPress={play ? onPause : onPlay}
-        />
       </View>
+      <MaterialIcons.Button
+        name={play ? "pause" : "play-arrow"}
+        size={15}
+        onPress={play ? onPause : onPlay}
+        iconStyle={{ margin: 0 }}
+      />
       <View style={styles.progressPart}>
-        <Text style={styles.positionLabel}>
-          {milisToString(position)}/
-          {duration ? milisToString(duration) : "--:--"}
-        </Text>
-        <View style={styles.progressBarContainer}>
-          <Progress.Bar
-            width={null}
-            progress={duration ? position / duration : undefined}
-            animationType="timing"
-            animationConfig={{ easing: Easing.linear }}
-            useNativeDriver
-          />
+        <View style={styles.durationContainer}>
+          <Text style={styles.positionLabel}>{milisToString(position)}</Text>
+          <Text style={styles.durationLabel}>
+            {duration ? milisToString(duration) : "--:--"}
+          </Text>
         </View>
+        <ProgressBar progress={positionToDuration} />
       </View>
-    </View>
+    </Card>
   );
 }
 

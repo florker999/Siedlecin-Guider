@@ -73,8 +73,10 @@ export default function TourTab(props: IProps) {
           />
         </View>
       </Modal>
-      <ScrollView>
-        <StatusBar hidden={false} />
+      <ScrollView
+        style={styles.PlayersContainer}
+        contentContainerStyle={{ rowGap: 15 }}
+      >
         {tracks?.map((track, index) => (
           <AudioPlayer
             key={index}
@@ -101,5 +103,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#000000D8",
+  },
+  PlayersContainer: {
+    paddingLeft: 15,
+    paddingRight: 15,
+    padding: 4,
+    display: "flex",
+    flexDirection: "column",
+    rowGap: 15,
   },
 });

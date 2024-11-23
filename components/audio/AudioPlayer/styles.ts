@@ -2,12 +2,12 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
     audioPlayer: {
-        height: 50,
-        borderColor: 'black',
-        borderBottomWidth: 2,
         display: 'flex',
         justifyContent: 'center',
-        position: 'relative'
+        alignItems: 'center',
+        rowGap: 5,
+        position: 'relative',
+        padding: 15
     },
     mainPart: {
         display: 'flex',
@@ -18,54 +18,31 @@ export default StyleSheet.create({
     audioTitle: {
         fontWeight: "bold"
     },
-    buttonStart: {
-        borderColor: 'blue',
-        borderWidth: 1,
-        borderRadius: 20,
-        width: '25%',
-        height: 50,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    buttonPause: {
-        borderColor: 'blue',
-        borderWidth: 1,
-        borderRadius: 20,
-        width: '25%',
-        height: 50,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    buttonTitle: {
-    },
     positionLabel: {
-        width: '100%',
         textAlign: 'center'
     },
     progressPart: {
         display: "flex",
         flexDirection: "column",
         alignItems: 'flex-start',
-        position: 'absolute',
-        bottom: 0,
         width: '100%'
     },
-    progressBarContainer: {
+    playButton: {
+        position: 'absolute',
+        right: 15,
+        top: '50%',
+        transform: [{ translateY: '-50%' }],
+        zIndex: 5
+    },
+    durationContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         width: '100%',
-        position: 'relative'
+        paddingLeft: 2,
+        paddingRight: 2
     },
-    progressBar: {
-        position: 'absolute'
-    },
-    progressBarHeight: {
-        height: 4
-    },
-    progressBarColor: {
-        backgroundColor: '#f0dbb0'
-    },
-    noTopBorder: {
-        borderTopWidth: 0
+    durationLabel: {
+
     }
 });
