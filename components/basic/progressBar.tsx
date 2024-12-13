@@ -1,3 +1,4 @@
+import { Colors } from "@/constants/Colors";
 import { Animated, StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
 interface IProps {
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
     width: "98%",
     margin: "auto",
     borderRadius: 1000,
-    backgroundColor: "black",
+    backgroundColor: Colors['light'].tint,
     height: 3,
   },
 });
