@@ -1,6 +1,9 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
+    mainContainer: {
+
+    },
     audioPlayer: {
         display: 'flex',
         justifyContent: 'center',
@@ -13,7 +16,8 @@ export default StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginBottom: 8
     },
     audioTitle: {
         fontWeight: "bold"
@@ -44,5 +48,8 @@ export default StyleSheet.create({
     },
     durationLabel: {
 
+    },
+    RecordingDescription: {
+        margin: 15
     }
 });

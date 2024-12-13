@@ -2,15 +2,21 @@ import { View, Easing, Animated } from "react-native";
 import React from "react";
 import styles from "./styles";
 import IProps from "./IProps";
-import { Card, Text } from "react-native-ui-lib";
+import { Card, Text, Button } from "react-native-ui-lib";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import ProgressBar from "@/components/basic/progressBar";
+import { Colors } from "@/constants/Colors";
+import Reanimated, { FlipInEasyX, FlipOutEasyX, LinearTransition, SlideInUp } from "react-native-reanimated";
+
+const AnimatedCard = Reanimated.createAnimatedComponent(Card);
 
 export default function AudioPlayer(props: IProps) {
   const [position, setPosition] = React.useState(0);
   const [duration, setDuration] = React.useState<number>();
+  const [isCollapsed, setIsCollapsed] = React.useState(true);
   const progressAnim = React.useRef(new Animated.Value(0)).current;
   const progressAnim2 = React.useRef(new Animated.Value(-50)).current;
+  const cardInfoHeight = React.useRef(new Animated.Value(0)).current;
 
   const { audio, play, onPlay, onPause, onFinish, title } = props;
 
@@ -76,28 +82,46 @@ export default function AudioPlayer(props: IProps) {
   };
 
   const positionToDuration: number = duration ? position / duration : 0;
+  const displayInfo = () => {
+    Animated.timing(cardInfoHeight, {
+      toValue: 1,
+      easing: Easing.linear,
+      useNativeDriver: true,
+      duration: 500
+    }).start()
+  }
 
   return (
-    <Card style={styles.audioPlayer}>
-      <View style={styles.mainPart}>
-        <Text style={styles.audioTitle}>{title}</Text>
-      </View>
-      <MaterialIcons.Button
-        name={play ? "pause" : "play-arrow"}
-        size={15}
-        onPress={play ? onPause : onPlay}
-        iconStyle={{ margin: 0 }}
-      />
-      <View style={styles.progressPart}>
-        <View style={styles.durationContainer}>
-          <Text style={styles.positionLabel}>{milisToString(position)}</Text>
-          <Text style={styles.durationLabel}>
-            {duration ? milisToString(duration) : "--:--"}
-          </Text>
+    <AnimatedCard layout={LinearTransition} style={styles.mainContainer} onPress={() => setIsCollapsed(!isCollapsed)}>
+      <View style={styles.audioPlayer}>
+        <View style={styles.mainPart}>
+          <Text style={styles.audioTitle}>{title}</Text>
         </View>
-        <ProgressBar progress={positionToDuration} />
+        <Button
+          onPress={play ? onPause : onPlay}
+          backgroundColor={Colors.light.tint}
+          iconSource={() => (
+            <MaterialIcons name={play ? "pause" : "play-arrow"} size={40} color={'white'} />
+          )}
+        />
+        <View style={styles.progressPart}>
+          <View style={styles.durationContainer}>
+            <Text style={styles.positionLabel}>{milisToString(position)}</Text>
+            <Text style={styles.durationLabel}>
+              {duration ? milisToString(duration) : "--:--"}
+            </Text>
+          </View>
+          <ProgressBar progress={positionToDuration} />
+        </View>
       </View>
-    </Card>
+      <View>
+        {!isCollapsed &&
+          <Text style={styles.RecordingDescription}>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui quas impedit, nostrum nobis velit odio maxime distinctio voluptatem nemo reprehenderit alias neque, autem dolorem, laudantium esse repellendus dolores quia repudiandae!
+          </Text>
+        }
+      </View>
+    </AnimatedCard>
   );
 }
 
