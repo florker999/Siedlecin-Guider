@@ -7,7 +7,6 @@ import {
   ActivityIndicator,
   SafeAreaView,
   ScrollView,
-  StatusBar,
   Modal,
   StyleSheet,
   View,
@@ -15,7 +14,7 @@ import {
 
 type Timeout = ReturnType<typeof setTimeout>;
 
-interface IProps {}
+interface IProps { }
 
 export default function TourTab(props: IProps) {
   const [showWelcomingWindow, setShowWelcomingWindow] = React.useState(true);
