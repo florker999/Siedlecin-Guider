@@ -1,11 +1,35 @@
 import React from "react";
 import { Modal, StyleSheet, View } from "react-native";
+import { SvgProps, Path, Circle, NumberProp } from "react-native-svg"
+import SvgPanZoom from "react-native-svg-pan-zoom"
+import { Card, Text } from "react-native-ui-lib";
+
+interface IPin {
+    r?: NumberProp,
+    onPress?: () => any,
+    cx: NumberProp,
+    cy: NumberProp,
+    fill?: string,
+}
+interface GroundFloorMapProps extends SvgProps {
+    pinsR: number,
+    pinsColour: string,
+    pins?: IPin[]
+}
+
 interface IProps {
 
 }
 
 export default function Parter(props: IProps) {
     const [pinContent, setPinContent] = React.useState<React.ReactElement>();
+    const pins: IPin[] = [
+        {
+            cx: 200,
+            cy: 120,
+            onPress: () => setPinContent(<Text>You have touched the pin!</Text>)
+        }
+    ]
     return (
         <View style={styles.page}>
             <Modal transparent visible={!!pinContent}>
@@ -15,7 +39,7 @@ export default function Parter(props: IProps) {
                     </Card>
                 </View>
             </Modal>
-            <GroundFloorMap onSelectRetirada={() => setPinContent(<Text>You have touched the pin!</Text>)} pinsR={14} />
+            <GroundFloorMap pinsColour="#795040" pins={pins} pinsR={14} />
         </View>
     )
 }
@@ -42,18 +66,6 @@ const styles = StyleSheet.create({
     }
 })
 
-import { SvgProps, Path, Circle } from "react-native-svg"
-import SvgPanZoom from "react-native-svg-pan-zoom"
-import { Card, Text } from "react-native-ui-lib";
-
-interface GroundFloorMapProps extends SvgProps {
-    pinsR: number,
-    onSelectRetirada(): any,
-/*     onSelectIzba(): any,
-    onSelectSala(): any,
-    onSelectWykusz(): any,
- */}
-
 const GroundFloorMap = (props: GroundFloorMapProps) => (
     <SvgPanZoom {...props}>
         <Path
@@ -68,39 +80,10 @@ const GroundFloorMap = (props: GroundFloorMapProps) => (
             stroke="#795040"
             strokeWidth={6}
         />
-        <Circle
-            onPress={props.onSelectRetirada}
-            cx={387.642}
-            cy={121.023}
-            r={props.pinsR}
-            fill="#795040"
-            stroke="#795040"
-        //paintOrder="fill"
-        />
-        <Circle
-            cx={393.582}
-            cy={249.268}
-            r={props.pinsR}
-            fill="#795040"
-            stroke="#795040"
-        //paintOrder="fill"
-        />
-        <Circle
-            id="a"
-            cx={175.532}
-            cy={261.149}
-            r={props.pinsR}
-            fill="#795040"
-            stroke="#795040"
-        //paintOrder="fill"
-        />
-        <Circle
-            cx={179.725}
-            cy={94.117}
-            r={props.pinsR}
-            fill="#795040"
-            stroke="#795040"
-        //paintOrder="fill"
-        />
+        {
+            props.pins?.map((pin, index) => (
+                <Circle fill={props.pinsColour} r={props.pinsR} {...pin} key={index} />
+            ))
+        }
     </SvgPanZoom>
 );
