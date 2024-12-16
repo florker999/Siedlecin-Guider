@@ -11,7 +11,7 @@ interface IProps {
 
 export function TowerRoofLink(props: IProps) {
     const styles = StyleSheet.create({
-        ButtonContainer: {
+        buttonContainer: {
             width: "100%",
             height: 80,
             borderColor: 'black',

@@ -7,7 +7,7 @@ interface IProps {
 
 export default function InstructionCard(props: IProps) {
   const styles = StyleSheet.create({
-    Container: {
+    container: {
       width: "90%",
       backgroundColor: "white",
       borderRadius: 18,
@@ -16,10 +16,10 @@ export default function InstructionCard(props: IProps) {
       position: "relative",
       alignItems: "center",
     },
-    Button: {
+    button: {
       marginTop: 10,
     },
-    Profile: {
+    profile: {
       position: "absolute",
       left: -10,
       bottom: -10,
@@ -27,7 +27,7 @@ export default function InstructionCard(props: IProps) {
   });
 
   return (
-    <View style={styles.Container}>
+    <View style={styles.container}>
       <Text>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet iure
         distinctio id maiores atque ipsam alias error quia. Voluptatibus fugiat
@@ -37,12 +37,12 @@ export default function InstructionCard(props: IProps) {
       <Button
         label={"Understood"}
         onPress={props.onButtonClick}
-        style={styles.Button}
+        style={styles.button}
         fullWidth={false}
       />
       <Avatar
         source={require("@/assets/images/guider_face.jpg")}
-        containerStyle={styles.Profile}
+        containerStyle={styles.profile}
       />
     </View>
   );

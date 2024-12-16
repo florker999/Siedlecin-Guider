@@ -10,7 +10,7 @@ interface IProps {
 
 export function ButtonLink(props: IProps) {
     const styles = StyleSheet.create({
-        ButtonContainer: {
+        buttonContainer: {
             width: "100%",
             height: 80,
             borderColor: 'black',
@@ -21,7 +21,7 @@ export function ButtonLink(props: IProps) {
             alignItems: 'center',
             alignContent: 'center'
         },
-        ButtonTitle: {
+        buttonTitle: {
             fontSize: 30,
             width: 'auto',
             color: props.titleColor
@@ -30,13 +30,13 @@ export function ButtonLink(props: IProps) {
 
     return (
         <Link
-            style={styles.ButtonContainer}
+            style={styles.buttonContainer}
             href={{ pathname: props.target }}
             asChild
         >
             <Pressable>
                 <View>
-                    <Text style={styles.ButtonTitle}>
+                    <Text style={styles.buttonTitle}>
                         {props.title}
                     </Text>
                 </View>

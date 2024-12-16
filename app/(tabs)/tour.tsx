@@ -66,14 +66,14 @@ export default function TourTab(props: IProps) {
   return (
     <SafeAreaView>
       <Modal transparent visible={showWelcomingWindow} animationType="slide">
-        <View style={styles.CenteredView}>
+        <View style={styles.centeredView}>
           <InstructionCard
             onButtonClick={() => setShowWelcomingWindow(false)}
           />
         </View>
       </Modal>
       <ScrollView
-        style={styles.PlayersContainer}
+        style={styles.playersContainer}
         contentContainerStyle={{ rowGap: 15 }}
       >
         {tracks?.map((track, index) => (
@@ -97,13 +97,13 @@ export default function TourTab(props: IProps) {
 }
 
 const styles = StyleSheet.create({
-  CenteredView: {
+  centeredView: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#000000D8",
   },
-  PlayersContainer: {
+  playersContainer: {
     paddingLeft: 15,
     paddingRight: 15,
     padding: 4,

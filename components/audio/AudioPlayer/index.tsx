@@ -116,7 +116,7 @@ export default function AudioPlayer(props: IProps) {
       </View>
       <View>
         {!isCollapsed &&
-          <Text style={styles.RecordingDescription}>
+          <Text style={styles.recordingDescription}>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui quas impedit, nostrum nobis velit odio maxime distinctio voluptatem nemo reprehenderit alias neque, autem dolorem, laudantium esse repellendus dolores quia repudiandae!
           </Text>
         }

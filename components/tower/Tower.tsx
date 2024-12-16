@@ -1,8 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import { TowerFloorLink } from "./TowerFloorLink";
-import { TowerRoofLink } from "./TowerRoofLink";
 
-interface IProps {}
+interface IProps { }
 
 export default function Tower(props: IProps) {
   return (

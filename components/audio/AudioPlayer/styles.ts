@@ -49,7 +49,7 @@ export default StyleSheet.create({
     durationLabel: {
 
     },
-    RecordingDescription: {
+    recordingDescription: {
         margin: 15
     }
 });

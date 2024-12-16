@@ -9,7 +9,7 @@ interface IProps {
 
 export function ButtonWithImage(props: IProps) {
     return (
-        <View style={styles.ButtonContainer}>
+        <View style={styles.buttonContainer}>
             <Link
                 href={{ pathname: props.target }}
                 asChild
@@ -17,9 +17,9 @@ export function ButtonWithImage(props: IProps) {
                 <Pressable>
                     <ImageBackground
                         source={require('@/assets/images/image1.heic')}
-                        style={styles.ButtonImage}
+                        style={styles.buttonImage}
                     >
-                        <Text style={styles.ButtonTitle}>
+                        <Text style={styles.buttonTitle}>
                             {props.title}
                         </Text>
                     </ImageBackground>
@@ -30,11 +30,11 @@ export function ButtonWithImage(props: IProps) {
 }
 
 const styles = StyleSheet.create({
-    ButtonContainer: {
+    buttonContainer: {
         width: "100%",
         height: 100,
     },
-    ButtonImage: {
+    buttonImage: {
         width: "100%",
         height: 90,
         display: 'flex',
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         alignItems: 'center'
     },
-    ButtonTitle: {
+    buttonTitle: {
         fontSize: 20,
         fontWeight: 'bold'
     }

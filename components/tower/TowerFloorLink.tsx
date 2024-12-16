@@ -11,7 +11,7 @@ interface IProps {
 
 export function TowerFloorLink(props: IProps) {
     const styles = StyleSheet.create({
-        ButtonContainer: {
+        buttonContainer: {
             width: "100%",
             height: 80,
             borderColor: 'black',
@@ -22,7 +22,7 @@ export function TowerFloorLink(props: IProps) {
             alignItems: 'center',
             alignContent: 'center'
         },
-        ButtonTitle: {
+        buttonTitle: {
             fontSize: 30,
             width: 'auto',
             color: props.titleColor
@@ -31,13 +31,13 @@ export function TowerFloorLink(props: IProps) {
 
     return (
         <Link
-            style={[ styles.ButtonContainer, props.style]}
+            style={[styles.buttonContainer, props.style]}
             href={{ pathname: props.target }}
             asChild
         >
             <Pressable>
                 <View>
-                    <Text style={styles.ButtonTitle}>
+                    <Text style={styles.buttonTitle}>
                         {props.title}
                     </Text>
                 </View>
