@@ -7,6 +7,9 @@ import { ThemedView } from '@/components/ThemedView';
 import { ButtonWithImage } from '@/components/ButtonWithImage';
 import { ButtonLink } from '@/components/ButtonLink';
 import Tower from '@/components/tower/Tower';
+import { Card } from 'react-native-ui-lib';
+import CardButton from '@/components/basic/cardButton';
+import { Link } from 'expo-router';
 
 export default function HomeScreen() {
   return (
@@ -18,7 +21,9 @@ export default function HomeScreen() {
           style={styles.reactLogo}
         />
       }>
-        <Tower />
+      <Link href={"/parter"}>
+        <CardButton title='Map' iconName={'map'} />
+      </Link>
     </ParallaxScrollView>
   );
   return (
@@ -30,7 +35,7 @@ export default function HomeScreen() {
           style={styles.reactLogo}
         />
       }>
-      <ButtonWithImage target="/parter" title=''/>
+      <ButtonWithImage target="/parter" title='' />
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Hello!</ThemedText>
         <HelloWave />

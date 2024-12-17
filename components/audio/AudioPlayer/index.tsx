@@ -6,7 +6,7 @@ import { Card, Text, Button } from "react-native-ui-lib";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import ProgressBar from "@/components/basic/progressBar";
 import { Colors } from "@/constants/Colors";
-import Reanimated, { FlipInEasyX, FlipOutEasyX, LinearTransition, SlideInUp } from "react-native-reanimated";
+import Reanimated, { LinearTransition } from "react-native-reanimated";
 
 const AnimatedCard = Reanimated.createAnimatedComponent(Card);
 
