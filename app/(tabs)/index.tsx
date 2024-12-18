@@ -1,13 +1,6 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 
-import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { ButtonWithImage } from '@/components/ButtonWithImage';
-import { ButtonLink } from '@/components/ButtonLink';
-import Tower from '@/components/tower/Tower';
-import { Card } from 'react-native-ui-lib';
 import CardButton from '@/components/basic/cardButton';
 import { Link } from 'expo-router';
 
@@ -24,72 +17,19 @@ export default function HomeScreen() {
       <Link href={"/parter"}>
         <CardButton title='Map' iconName={'map'} />
       </Link>
-    </ParallaxScrollView>
-  );
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/wieza.jpg')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ButtonWithImage target="/parter" title='' />
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Hello!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
+      <Link href={"/(tabs)/tour"}>
+        <CardButton title='Audioguider' iconName={'headphones'} />
+      </Link>
     </ParallaxScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  floorContainer: {
-    borderColor: 'black',
-    borderWidth: 2
-  },
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
   reactLogo: {
     height: "100%",
     width: "100%",
     bottom: 0,
     left: 0,
     position: 'absolute',
-  },
+  }
 });
