@@ -1,3 +1,4 @@
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { Modal, StyleSheet, Text, View } from "react-native";
 import { Avatar, Button } from "react-native-ui-lib";
 
@@ -18,8 +19,13 @@ export default function InstructionCard(props: IProps) {
       position: "relative",
       alignItems: "center",
     },
-    button: {
+    buttonsContainer: {
+      display: 'flex',
+      flexDirection: 'row',
       marginTop: 20,
+      columnGap: 20
+    },
+    button: {
     },
     profile: {
       position: "absolute",
@@ -39,13 +45,21 @@ export default function InstructionCard(props: IProps) {
       <Text style={styles.content}>
         {props.content}
       </Text>
-      <Button
-        label={props.buttonTitle}
-        labelStyle={styles.buttonTitle}
-        onPress={props.onButtonClick}
-        style={styles.button}
-        fullWidth={false}
-      />
+      <View style={styles.buttonsContainer}>
+        <Button
+          label={props.buttonTitle}
+          labelStyle={styles.buttonTitle}
+          onPress={props.onButtonClick}
+          style={styles.button}
+        />
+        <Button
+          iconSource={() => <MaterialIcons name="headphones" size={25} color={'white'} />}
+          labelStyle={styles.buttonTitle}
+          style={{ width: 40 }}
+        // TODO
+        />
+
+      </View>
       <Avatar
         source={require("@/assets/images/guider_face.jpg")}
         containerStyle={styles.profile}
