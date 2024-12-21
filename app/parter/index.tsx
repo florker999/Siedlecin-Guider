@@ -23,14 +23,14 @@ interface IProps {
 }
 
 export default function Parter(props: IProps) {
-    const [pinContent, setPinContent] = React.useState<React.ReactElement>();
+    const [pinContent, setPinContent] = React.useState('');
     const [showWelcomingWindow, setShowWelcomingWindow] = React.useState(true);
 
     const pins: IPin[] = [
         {
             cx: 200,
             cy: 120,
-            onPress: () => setPinContent(<Text>You have touched the pin!</Text>)
+            onPress: () => setPinContent("Na XIV-wiecznej belce stropowej dostrzec można pięć kutych gwoździ, rozmieszczonych w jednakowych odstępach - co 120 cm. Służyły one do wieszania dekoracyjnych tkanin, które przykrywały ścianę ciepłej izby.")
         }
     ]
     return (
@@ -46,13 +46,15 @@ export default function Parter(props: IProps) {
             </Modal>
             <Modal transparent visible={!!pinContent}>
                 <View style={styles.centeredView}>
-                    <Card style={styles.card} onPress={() => setPinContent(undefined)}>
-                        {pinContent}
-                    </Card>
+                    <InstructionCard
+                        onButtonClick={() => setPinContent('')}
+                        content={pinContent}
+                        buttonTitle="Zamknij"
+                    />
                 </View>
-            </Modal>
+            </Modal >
             <GroundFloorMap pinsColour="#795040" pins={pins} pinsR={14} />
-        </View>
+        </View >
     )
 }
 
