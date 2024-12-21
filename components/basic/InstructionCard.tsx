@@ -3,6 +3,8 @@ import { Avatar, Button } from "react-native-ui-lib";
 
 interface IProps {
   onButtonClick: () => void;
+  content: string;
+  buttonTitle: string;
 }
 
 export default function InstructionCard(props: IProps) {
@@ -11,31 +13,35 @@ export default function InstructionCard(props: IProps) {
       width: "90%",
       backgroundColor: "white",
       borderRadius: 18,
-      padding: 15,
+      padding: 18,
       maxWidth: 400,
       position: "relative",
       alignItems: "center",
     },
     button: {
-      marginTop: 10,
+      marginTop: 20,
     },
     profile: {
       position: "absolute",
       left: -10,
       bottom: -10,
     },
+    content: {
+      fontSize: 20
+    },
+    buttonTitle: {
+      fontSize: 18
+    }
   });
 
   return (
     <View style={styles.container}>
-      <Text>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet iure
-        distinctio id maiores atque ipsam alias error quia. Voluptatibus fugiat
-        omnis recusandae vitae nostrum nobis sed velit temporibus laudantium
-        natus.
+      <Text style={styles.content}>
+        {props.content}
       </Text>
       <Button
-        label={"Understood"}
+        label={props.buttonTitle}
+        labelStyle={styles.buttonTitle}
         onPress={props.onButtonClick}
         style={styles.button}
         fullWidth={false}

@@ -69,6 +69,8 @@ export default function TourTab(props: IProps) {
         <View style={styles.centeredView}>
           <InstructionCard
             onButtonClick={() => setShowWelcomingWindow(false)}
+            content={"Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet iure distinctio id maiores atque ipsam alias error quia. Voluptatibus fugiat omnis recusandae vitae nostrum nobis sed velit temporibus laudantium natus."}
+            buttonTitle="Understood"
           />
         </View>
       </Modal>

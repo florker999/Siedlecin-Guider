@@ -1,3 +1,4 @@
+import InstructionCard from "@/components/basic/InstructionCard";
 import React from "react";
 import { Modal, StyleSheet, View } from "react-native";
 import { SvgProps, Path, Circle, NumberProp } from "react-native-svg"
@@ -23,6 +24,8 @@ interface IProps {
 
 export default function Parter(props: IProps) {
     const [pinContent, setPinContent] = React.useState<React.ReactElement>();
+    const [showWelcomingWindow, setShowWelcomingWindow] = React.useState(true);
+
     const pins: IPin[] = [
         {
             cx: 200,
@@ -32,6 +35,15 @@ export default function Parter(props: IProps) {
     ]
     return (
         <View style={styles.page}>
+            <Modal transparent visible={showWelcomingWindow} animationType="slide">
+                <View style={styles.centeredView}>
+                    <InstructionCard
+                        onButtonClick={() => setShowWelcomingWindow(false)}
+                        content="Jeśli chcesz przyjrzeć się planowi piętra, na którym jesteś, wybierz je z listy. Każda mapka posiada też punkty, które po dotknięciu zdradzą więcej informacji o wskazanym miejscu."
+                        buttonTitle="Rozumiem"
+                    />
+                </View>
+            </Modal>
             <Modal transparent visible={!!pinContent}>
                 <View style={styles.centeredView}>
                     <Card style={styles.card} onPress={() => setPinContent(undefined)}>
