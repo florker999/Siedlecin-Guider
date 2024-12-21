@@ -69,8 +69,8 @@ export default function TourTab(props: IProps) {
         <View style={styles.centeredView}>
           <InstructionCard
             onButtonClick={() => setShowWelcomingWindow(false)}
-            content={"Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet iure distinctio id maiores atque ipsam alias error quia. Voluptatibus fugiat omnis recusandae vitae nostrum nobis sed velit temporibus laudantium natus."}
-            buttonTitle="Understood"
+            content={"Daj się uwieść historii! Poznaj historię Wieży w Siedlęcinie, szczegóły jej budowy oraz szkic życiorysu jej mieszkańców na przestrzeni wielu wieków dzięki audio przewodnikowi. Zacznij od samego początku lub przeczytaj opis i wybierz interesujący cię fragment przeszłości."}
+            buttonTitle={"Rozumiem"}
           />
         </View>
       </Modal>
