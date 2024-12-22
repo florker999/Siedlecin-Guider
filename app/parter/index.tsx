@@ -3,7 +3,6 @@ import React from "react";
 import { Modal, StyleSheet, View } from "react-native";
 import { SvgProps, Path, Circle, NumberProp } from "react-native-svg"
 import SvgPanZoom from "react-native-svg-pan-zoom"
-import { Card, Text } from "react-native-ui-lib";
 
 interface IPin {
     r?: NumberProp,
@@ -11,6 +10,8 @@ interface IPin {
     cx: NumberProp,
     cy: NumberProp,
     fill?: string,
+    content: string,
+    audioSource: any,
 }
 interface GroundFloorMapProps extends SvgProps {
     pinsR: number,
@@ -23,14 +24,16 @@ interface IProps {
 }
 
 export default function Parter(props: IProps) {
-    const [pinContent, setPinContent] = React.useState('');
+    const [getPin, setPin] = React.useState<IPin>();
     const [showWelcomingWindow, setShowWelcomingWindow] = React.useState(true);
 
     const pins: IPin[] = [
         {
             cx: 200,
             cy: 120,
-            onPress: () => setPinContent("Na XIV-wiecznej belce stropowej dostrzec można pięć kutych gwoździ, rozmieszczonych w jednakowych odstępach - co 120 cm. Służyły one do wieszania dekoracyjnych tkanin, które przykrywały ścianę ciepłej izby.")
+            onPress: () => setPin(pins[0]), // TODO change
+            content: "Na XIV-wiecznej belce stropowej dostrzec można pięć kutych gwoździ, rozmieszczonych w jednakowych odstępach - co 120 cm. Służyły one do wieszania dekoracyjnych tkanin, które przykrywały ścianę ciepłej izby.",
+            audioSource: require("@/assets/recordings/parter1.mp3")
         }
     ]
     return (
@@ -41,18 +44,23 @@ export default function Parter(props: IProps) {
                         onButtonClick={() => setShowWelcomingWindow(false)}
                         content="Jeśli chcesz przyjrzeć się planowi piętra, na którym jesteś, wybierz je z listy. Każda mapka posiada też punkty, które po dotknięciu zdradzą więcej informacji o wskazanym miejscu."
                         buttonTitle="Rozumiem"
+                        audioSource={require("@/assets/recordings/parter1.mp3")}
                     />
                 </View>
             </Modal>
-            <Modal transparent visible={!!pinContent}>
-                <View style={styles.centeredView}>
-                    <InstructionCard
-                        onButtonClick={() => setPinContent('')}
-                        content={pinContent}
-                        buttonTitle="Zamknij"
-                    />
-                </View>
-            </Modal >
+            {
+                getPin &&
+                <Modal transparent>
+                    <View style={styles.centeredView}>
+                        <InstructionCard
+                            onButtonClick={() => setPin(undefined)}
+                            buttonTitle="Zamknij"
+                            content={getPin?.content}
+                            audioSource={getPin?.audioSource}
+                        />
+                    </View>
+                </Modal >
+            }
             <GroundFloorMap pinsColour="#795040" pins={pins} pinsR={14} />
         </View >
     )
