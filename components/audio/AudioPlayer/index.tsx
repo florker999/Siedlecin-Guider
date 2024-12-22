@@ -129,5 +129,5 @@ function milisToString(milis: number): string {
   const secs = Math.floor(milis / 1000);
   const mins = Math.floor(secs / 60);
 
-  return `${mins < 10 && 0}${mins}:${secs < 10 && 0}${secs % 60}`;
+  return `${mins < 10 ? 0 : ''}${mins}:${secs < 10 ? 0 : ''}${secs % 60}`;
 }
