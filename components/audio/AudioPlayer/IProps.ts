@@ -13,6 +13,11 @@ export default interface IProps {
   title: string;
 
   /**
+   * Description will be shown after clicking at the player. It provides the user with more information about the track or displays the subtitles.
+   */
+  description?: string;
+
+  /**
    * defines if track should be played
    */
   play: boolean;

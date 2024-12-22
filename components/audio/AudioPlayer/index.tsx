@@ -92,7 +92,7 @@ export default function AudioPlayer(props: IProps) {
   }
 
   return (
-    <AnimatedCard layout={LinearTransition} style={styles.mainContainer} onPress={() => setIsCollapsed(!isCollapsed)}>
+    <AnimatedCard layout={LinearTransition} style={styles.mainContainer} onPress={() => props.description && setIsCollapsed(!isCollapsed)}>
       <View style={styles.audioPlayer}>
         <View style={styles.mainPart}>
           <Text style={styles.audioTitle}>{title}</Text>
@@ -116,9 +116,7 @@ export default function AudioPlayer(props: IProps) {
       </View>
       <View>
         {!isCollapsed &&
-          <Text style={styles.recordingDescription}>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui quas impedit, nostrum nobis velit odio maxime distinctio voluptatem nemo reprehenderit alias neque, autem dolorem, laudantium esse repellendus dolores quia repudiandae!
-          </Text>
+          <Text style={styles.recordingDescription}>{props.description}</Text>
         }
       </View>
     </AnimatedCard>

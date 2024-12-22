@@ -83,6 +83,7 @@ export default function TourTab(props: IProps) {
           <AudioPlayer
             key={index}
             title={"Track " + index}
+            description="Witaj drogi gościu w wieży książęcej w Siedlęcinie. Zacznijmy nasze zwiedzanie od parteru. Stojąc w korytarzu zaraz po wejściu czeka cię wybór. Możesz wejść do sali po prawej stronie i obejrzeć film, w którym jeden z opiekunów Wieży opowiada o jej powstaniu i historii. Zobaczysz również wizualizacje możliwego jej wyglądu przed laty. W sali po lewej stronie zapoznasz się z wystawami artefaktów średniowiecza i funkcjonowaniem życia w Wieży za czasów jej świetności. Zwróć uwagę na pozostałości po pracach archeologicznych, jakie miały tu miejsce. Natomiast naprzeciwko znajdziesz zejście do piwnic, gdzie znajdował się magazyn zapasów i innych przedmiotów."
             audio={track}
             onPlay={() => onPlay(index)}
             onPause={() => setTrackIndex(undefined)}
