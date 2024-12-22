@@ -44,7 +44,7 @@ export default function Parter(props: IProps) {
                         onButtonClick={() => setShowWelcomingWindow(false)}
                         content="Jeśli chcesz przyjrzeć się planowi piętra, na którym jesteś, wybierz je z listy. Każda mapka posiada też punkty, które po dotknięciu zdradzą więcej informacji o wskazanym miejscu."
                         buttonTitle="Rozumiem"
-                        audioSource={require("@/assets/recordings/parter1.mp3")}
+                        audioSource={require("@/assets/recordings/instructions/map.mp3")}
                     />
                 </View>
             </Modal>
