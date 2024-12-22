@@ -71,6 +71,7 @@ export default function TourTab(props: IProps) {
             onButtonClick={() => setShowWelcomingWindow(false)}
             content={"Daj się uwieść historii! Poznaj historię Wieży w Siedlęcinie, szczegóły jej budowy oraz szkic życiorysu jej mieszkańców na przestrzeni wielu wieków dzięki audio przewodnikowi. Zacznij od samego początku lub przeczytaj opis i wybierz interesujący cię fragment przeszłości."}
             buttonTitle={"Rozumiem"}
+            audioSource={require("@/assets/recordings/parter1.mp3")}
           />
         </View>
       </Modal>
