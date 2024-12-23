@@ -73,7 +73,11 @@ export default function AudioPlayer(props: IProps) {
           progressAnim2.stopAnimation();
         }
       }
+
     });
+    return () => {
+      audio.stopAsync();
+    }
   }, [audio, play]);
 
   const icons = {
