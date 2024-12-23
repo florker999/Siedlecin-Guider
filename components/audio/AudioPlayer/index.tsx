@@ -80,20 +80,7 @@ export default function AudioPlayer(props: IProps) {
     }
   }, [audio, play]);
 
-  const icons = {
-    play: require("@/assets/icons/play.png"),
-    pause: require("@/assets/icons/pause.png"),
-  };
-
   const positionToDuration: number = duration ? position / duration : 0;
-  const displayInfo = () => {
-    Animated.timing(cardInfoHeight, {
-      toValue: 1,
-      easing: Easing.linear,
-      useNativeDriver: true,
-      duration: 500
-    }).start()
-  }
 
   return (
     <AnimatedCard layout={LinearTransition} style={styles.mainContainer} onPress={() => props.description && setIsCollapsed(!isCollapsed)}>
