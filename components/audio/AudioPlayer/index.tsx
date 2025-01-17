@@ -1,4 +1,4 @@
-import { View, Easing, Animated } from "react-native";
+import { View } from "react-native";
 import React from "react";
 import styles from "./styles";
 import IProps from "./IProps";
@@ -14,9 +14,6 @@ export default function AudioPlayer(props: IProps) {
   const [position, setPosition] = React.useState(0);
   const [duration, setDuration] = React.useState<number>();
   const [isCollapsed, setIsCollapsed] = React.useState(true);
-  const progressAnim = React.useRef(new Animated.Value(0)).current;
-  const progressAnim2 = React.useRef(new Animated.Value(-50)).current;
-  const cardInfoHeight = React.useRef(new Animated.Value(0)).current;
 
   const { audio, play, onPlay, onPause, onFinish, title } = props;
 
@@ -50,18 +47,6 @@ export default function AudioPlayer(props: IProps) {
           setPosition(0);
           audio.playAsync().then((res) => {
             onPlay();
-            Animated.timing(progressAnim, {
-              toValue: 1,
-              easing: Easing.linear,
-              useNativeDriver: true,
-              duration: (res.isLoaded && res.durationMillis) || undefined,
-            }).start();
-            Animated.timing(progressAnim2, {
-              toValue: 0,
-              easing: Easing.linear,
-              useNativeDriver: true,
-              duration: (res.isLoaded && res.durationMillis) || undefined,
-            }).start();
             if (res.isLoaded) {
               setDuration(res.durationMillis);
             }
@@ -69,8 +54,6 @@ export default function AudioPlayer(props: IProps) {
         } else if (status.isPlaying && !play) {
           // pause track if is playing but shouldn't and do pause callback
           audio.pauseAsync().then(() => onPause());
-          progressAnim.stopAnimation();
-          progressAnim2.stopAnimation();
         }
       }
 
@@ -83,7 +66,7 @@ export default function AudioPlayer(props: IProps) {
   const positionToDuration: number = duration ? position / duration : 0;
 
   return (
-    <AnimatedCard layout={LinearTransition} style={styles.mainContainer} onPress={() => props.description && setIsCollapsed(!isCollapsed)}>
+    <Card style={styles.mainContainer} onPress={() => props.description && setIsCollapsed(!isCollapsed)}>
       <View style={styles.audioPlayer}>
         <View style={styles.mainPart}>
           <Text style={styles.audioTitle}>{title}</Text>
@@ -102,15 +85,15 @@ export default function AudioPlayer(props: IProps) {
               {duration ? milisToString(duration) : "--:--"}
             </Text>
           </View>
-          <ProgressBar progress={positionToDuration} />
-        </View>
+          {/*           <ProgressBar progress={positionToDuration} />
+ */}        </View>
       </View>
       <View>
         {!isCollapsed &&
           <Text style={styles.recordingDescription}>{props.description}</Text>
         }
       </View>
-    </AnimatedCard>
+    </Card>
   );
 }
 
