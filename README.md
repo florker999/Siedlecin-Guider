@@ -4,6 +4,13 @@ This mobile app serves as a comprehensive guide for visitors of the Ducal Tower 
 
 The current version is a demo exploring the capabilities of the Expo framework as well as the needs of the client - Ducal Tower in Siedlecin. Planned to be released this year, the app will be continuously expanded.
 
+<div style="overflow-x: auto; white-space: nowrap;">
+  <img src="assets/preview/menu.PNG" alt="App Screenshot 1" style="width: auto; height: 300px; margin-right: 10px;">
+  <img src="assets/preview/portal.PNG" alt="App Screenshot 2" style="width: auto; height: 300px; margin-right: 10px;">
+  <img src="assets/preview/audioguide.PNG" alt="App Screenshot 3" style="width: auto; height: 300px; margin-right: 10px;">
+  <img src="assets/preview/map.PNG" alt="App Screenshot 4" style="width: auto; height: 300px; margin-right: 10px;">
+</div>
+
 ## Get started
 
 1. Install dependencies
