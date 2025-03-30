@@ -1,6 +1,6 @@
-# Welcome to your Expo app 👋
+# Welcome to the Siedlecin Tower Guide App 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This mobile app serves as a comprehensive guide for visitors of the Ducal Tower in Siedlecin. It enhances visitor experience through an audioguide that leads one through the tower's history, architecture, and significant features. Additionally, the app includes interactive maps for each floor, allowing users to easily navigate the tower and discover points of interest with further details.
 
 ## Get started
 
