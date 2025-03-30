@@ -2,6 +2,8 @@
 
 This mobile app serves as a comprehensive guide for visitors of the Ducal Tower in Siedlecin. It enhances visitor experience through an audioguide that leads one through the tower's history, architecture, and significant features. Additionally, the app includes interactive maps for each floor, allowing users to easily navigate the tower and discover points of interest with further details.
 
+The current version is a demo exploring the capabilities of the Expo framework as well as the needs of the client - Ducal Tower in Siedlecin. Planned to be released this year, the app will be continuously expanded.
+
 ## Get started
 
 1. Install dependencies
